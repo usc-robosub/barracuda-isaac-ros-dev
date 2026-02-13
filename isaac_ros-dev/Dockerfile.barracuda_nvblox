@@ -1,0 +1,31 @@
+### Dockerfile to build a container image based on `barracuda_isaac_ros`
+### that includes the `barracuda_nvblox_launch` package copied into the
+### workspace so the launch file is available inside the image.
+###
+### Build with:
+###   docker-compose build
+### or
+###   docker build -f Dockerfile.barracuda_nvblox -t barracuda_isaac_ros:with-nvblox .
+
+ARG BASE_IMAGE=barracuda_isaac_ros
+FROM ${BASE_IMAGE}
+
+ARG USER_UID=1000
+ARG USER_GID=1000
+
+ENV ISAAC_WS=/workspaces/isaac_ros-dev
+
+# Ensure workspace path exists and copy the launch package into the image.
+RUN mkdir -p ${ISAAC_WS}/src
+COPY src/barracuda_nvblox_launch ${ISAAC_WS}/src/barracuda_nvblox_launch
+COPY workspace-entrypoint.sh /usr/local/bin/scripts/workspace-entrypoint.sh
+
+# Set ownership of the copied files to the provided UID/GID to avoid permission issues
+RUN chown -R ${USER_UID}:${USER_GID} ${ISAAC_WS}/src/barracuda_nvblox_launch || true
+RUN chmod +x /usr/local/bin/scripts/workspace-entrypoint.sh || true
+
+# Ensure ROS domain is 0 by default inside the image
+ENV ROS_DOMAIN_ID=0
+
+# Use the workspace entrypoint so the container can optionally build+launch
+ENTRYPOINT ["/usr/local/bin/scripts/workspace-entrypoint.sh"]

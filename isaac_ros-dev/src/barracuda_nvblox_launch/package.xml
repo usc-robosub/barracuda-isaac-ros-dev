@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>barracuda_nvblox_launch</name>
+  <version>0.1.0</version>
+  <description>Launch files to run nvblox subscribing to an external ZED camera.</description>
+  <maintainer email="you@example.com">Barracuda</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>isaac_ros_launch_utils</exec_depend>
+  <exec_depend>nvblox_ros_python_utils</exec_depend>
+  <exec_depend>nvblox_examples_bringup</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

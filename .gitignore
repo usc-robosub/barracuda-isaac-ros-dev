@@ -1,6 +1,9 @@
 devel/
 logs/
 build/
+install/
+isaac_ros_assets/
+log/
 bin/
 lib/
 msg_gen/
@@ -47,5 +50,6 @@ qtcreator-*
 # Emacs
 .#*
 
+*.tar.gz
 # Catkin custom files
 CATKIN_IGNORE
